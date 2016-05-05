@@ -2,7 +2,7 @@
 A collection of common and useful GraphQL Object schemas.
 Expressed in **GraphQL Schema Language**.
 
-(Need a quick primer? Refer to the [cheat sheet](http://wehavefaces.net/graphql-shorthand-notation-cheatsheet-17cd715861b6) right here)
+(Need a quick primer? Refer to the [cheat sheet](http://wehavefaces.net/graphql-shorthand-notation-cheatsheet-17cd715861b6))
 
 ## Schemas List
 - [GeoJSON](./geojson)
