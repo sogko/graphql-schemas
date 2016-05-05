@@ -1,0 +1,131 @@
+enum GeoJSONType {
+	POINT
+	MULTIPOINT
+	LINESTRING
+	MULTILINESTRING
+	POLYGON
+	MULTIPOLYGON
+	GEOMETRYCOLLECTION
+	FEATURE
+	FEATURECOLLECTION
+}
+
+enum GeoJSONCoordinateSystemType {
+  NAME
+  LINK
+}
+
+type GeoJSONNamedCRS {
+	name: String!
+}
+
+type GeoJSONLinkedCRS {
+	href: String!
+	type: String
+}
+
+union GeoJSONCRS = GeoJSONNamedCRS | GeoJSONLinkedCRS
+
+type GeoJSONCoordinateReferenceSystem {
+	type: String!
+	properties: GeoJSONCRS!
+}
+
+interface GeoJSONInterface {
+	type: GeoJSONType!
+  crs: GeoJSONCoordinateReferenceSystem
+	bbox: GeoJSONBoundingBox
+}
+
+type GeoJSONPoint implements GeoJSONInterface {
+	type: GeoJSONType!
+	crs: GeoJSONCoordinateSystem
+	bbox: GeoJSONBoundingBox
+
+	coordinates: [Float]!
+}
+
+type GeoJSONMultiPoint implements GeoJSONInterface {
+	type: GeoJSONType!
+	crs: GeoJSONCoordinateSystem
+	bbox: GeoJSONBoundingBox
+
+	coordinates: [[Float]!]!
+}
+
+type GeoJSONLineString implements GeoJSONInterface {
+	type: GeoJSONType!
+	crs: GeoJSONCoordinateSystem
+	bbox: GeoJSONBoundingBox
+
+	coordinates: [[Float]!]!
+}
+
+type GeoJSONMultiLineString implements GeoJSONInterface {
+	type: GeoJSONType!
+	crs: GeoJSONCoordinateSystem
+	bbox: GeoJSONBoundingBox
+
+	coordinates: [[[Float]!]!]!
+}
+
+type GeoJSONPolygon implements GeoJSONInterface {
+	type: GeoJSONType!
+	crs: GeoJSONCoordinateSystem
+	bbox: GeoJSONBoundingBox
+
+	coordinates: [[[Float]!]!]!
+}
+
+type GeoJSONMultiPolygon implements GeoJSONInterface {
+	type: GeoJSONType!
+	crs: GeoJSONCoordinateSystem
+	bbox: GeoJSONBoundingBox
+
+	coordinates: [[[[Float]!]!]!]!
+}
+
+union GeoJSONGeometry = GeoJSONPoint |
+  GeoJSONMultiPoint |
+  GeoJSONLineString |
+  GeoJSONMultiLineString |
+  GeoJSONPolygon |
+  GeoJSONMultiPolygon
+
+type GeoJSONGeometryCollection implements GeoJSONInterface {
+	type: GeoJSONType!
+	crs: GeoJSONCoordinateSystem
+	bbox: GeoJSONBoundingBox
+
+	geometries: [GeoJSONGeometry!]!
+}
+
+scalar JSONString
+
+type GeoJSONFeature implements GeoJSONInterface {
+	type: GeoJSONType!
+	crs: GeoJSONCoordinateSystem
+	bbox: GeoJSONBoundingBox
+
+	geometry: GeoJSON
+	properties: JSONString
+	id: String
+}
+
+type GeoJSONFeatureCollection implements GeoJSONInterface {
+	type: GeoJSONType!
+	crs: GeoJSONCoordinateSystem
+	bbox: GeoJSONBoundingBox
+
+	features: [GeoJSONFeature!]!
+}
+
+union GeoJSON = GeoJSONPoint |
+  GeoJSONMultiPoint |
+  GeoJSONLineString |
+  GeoJSONMultiLineString |
+  GeoJSONPolygon |
+  GeoJSONMultiPolygon |
+  GeoJSONGeometryCollection |
+  GeoJSONFeature |
+  GeoJSONFeatureCollection

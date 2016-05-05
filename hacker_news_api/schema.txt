@@ -1,0 +1,152 @@
+// Relay Node interface
+interface Node {
+  id: ID!
+}
+
+// Relay PageInfo object
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+enum HackerNewsItemType {
+  JOB
+  STORY
+  COMMENT
+  POLL
+  POLLOPT
+}
+
+// HackerNewsUser
+type HackerNewsUser implements Node {
+  id: ID!
+  hnId: String!
+  delay: Int
+  created: Int
+  createdISO: String
+  about: String
+  submitted(after: String, first: Int, before: String, last: Int): HackerNewsItemConnection
+}
+
+type HackerNewsUserConnection {
+  pageInfo: PageInfo!
+  edges: [HackerNewsUserEdge]
+}
+
+type HackerNewsUserEdge {
+  node: HackerNewsUser
+  cursor: String!
+}
+
+// HackerNewsItem
+interface HackerNewsItem {
+  id: ID!
+  hnId: String!
+  type: HackerNewsItemType!
+  by: HackerNewsUser!
+  time: Int!
+  timeISO: String!
+  text: String
+}
+
+type HackerNewsItemConnection {
+  pageInfo: PageInfo!
+  edges: [HackerNewsItemEdge]
+}
+
+type HackerNewsItemEdge {
+  node: HackerNewsItem
+  cursor: String!
+}
+
+// HackerNewsStory
+type HackerNewsStory implements Node, HackerNewsItem {
+  id: ID!
+  hnId: String!
+  type: HackerNewsItemType!
+  by: HackerNewsUser!
+  descendants: Int
+  score: Int
+  time: Int!
+  timeISO: String!
+  title: String
+  url: String
+  text: String
+  kids(after: String, first: Int, before: String, last: Int): HackerNewsCommentConnection
+  deleted: Boolean
+  dead: Boolean
+}
+
+
+type HackerNewsComment implements Node, HackerNewsItem {
+  id: ID!
+  hnId: String!
+  type: HackerNewsItemType!
+  by: HackerNewsUser!
+  parent: Node
+  text: String
+  time: Int!
+  timeISO: String!
+  kids(after: String, first: Int, before: String, last: Int): HackerNewsCommentConnection
+  deleted: Boolean
+  dead: Boolean
+}
+
+type HackerNewsCommentConnection {
+  pageInfo: PageInfo!
+  edges: [HackerNewsCommentEdge]
+}
+
+type HackerNewsCommentEdge {
+  node: User
+  cursor: String!
+}
+
+type HackerNewsJob implements Node, HackerNewsItem {
+  id: ID!
+  hnId: String!
+  type: HackerNewsItemType!
+  by: HackerNewsUser!
+  score: Int
+  text: String
+  time: Int!
+  timeISO: String!
+  title: String
+  url: String
+  deleted: Boolean
+  dead: Boolean
+}
+
+type HackerNewsPoll implements Node, HackerNewsItem {
+  id: ID!
+  hnId: String!
+  type: HackerNewsItemType!
+  by: HackerNewsUser!
+  descendants: Int
+  score: Int
+  time: Int!
+  timeISO: String!
+  title: String
+  text: String
+  kids(after: String, first: Int, before: String, last: Int): HackerNewsCommentConnection
+  deleted: Boolean
+  dead: Boolean
+  parts: [HackerNewsPollOpt]
+}
+
+type HackerNewsPollOpt implements Node, HackerNewsItem {
+  id: ID!
+  hnId: String!
+  type: HackerNewsItemType!
+  by: HackerNewsUser!
+  score: Int
+  time: Int!
+  timeISO: String!
+  text: String
+  parent: Node
+  deleted: Boolean
+}
+
+
