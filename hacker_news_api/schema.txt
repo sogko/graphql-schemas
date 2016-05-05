@@ -1,9 +1,9 @@
-// Relay Node interface
+# Relay Node interface
 interface Node {
   id: ID!
 }
 
-// Relay PageInfo object
+# Relay PageInfo object
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -19,7 +19,7 @@ enum HackerNewsItemType {
   POLLOPT
 }
 
-// HackerNewsUser
+# HackerNewsUser
 type HackerNewsUser implements Node {
   id: ID!
   hnId: String!
@@ -40,7 +40,7 @@ type HackerNewsUserEdge {
   cursor: String!
 }
 
-// HackerNewsItem
+# HackerNewsItem
 interface HackerNewsItem {
   id: ID!
   hnId: String!
@@ -61,7 +61,7 @@ type HackerNewsItemEdge {
   cursor: String!
 }
 
-// HackerNewsStory
+# HackerNewsStory
 type HackerNewsStory implements Node, HackerNewsItem {
   id: ID!
   hnId: String!
