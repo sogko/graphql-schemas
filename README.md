@@ -6,7 +6,7 @@ Expressed in **GraphQL Schema Language**.
 
 ## Schemas List
 - [GeoJSON](./geojson)
-- [GraphQL Introspection Systen Schema](./graphql_introspection_system/)
+- [GraphQL Introspection System Schema](./graphql_introspection_system/)
 - [Hacker News API](./hacker_news_api)
 
 Want to contribute more schemas?
