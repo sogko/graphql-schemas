@@ -1,131 +1,115 @@
+scalar GeoJSONCoordinates
+scalar JSONObject
+
 enum GeoJSONType {
-	POINT
-	MULTIPOINT
-	LINESTRING
-	MULTILINESTRING
-	POLYGON
-	MULTIPOLYGON
-	GEOMETRYCOLLECTION
-	FEATURE
-	FEATURECOLLECTION
+	Point
+	MultiPoint
+	LineString
+	MultiLineString
+	Polygon
+	MultiPolygon
+	GeometryCollection
+	Feature
+	FeatureCollection
 }
 
 enum GeoJSONCoordinateSystemType {
-  NAME
-  LINK
+  name
+  link
 }
 
-type GeoJSONNamedCRS {
+type GeoJSONNamedCRSProperties {
 	name: String!
 }
 
-type GeoJSONLinkedCRS {
+type GeoJSONLinkedCRSProperties {
 	href: String!
 	type: String
 }
 
-union GeoJSONCRS = GeoJSONNamedCRS | GeoJSONLinkedCRS
+union GeoJSONCRSProperties = GeoJSONNamedCRSProperties | GeoJSONLinkedCRSProperties
 
 type GeoJSONCoordinateReferenceSystem {
 	type: String!
-	properties: GeoJSONCRS!
+	properties: GeoJSONCRSProperties!
 }
 
 interface GeoJSONInterface {
 	type: GeoJSONType!
   crs: GeoJSONCoordinateReferenceSystem
-	bbox: GeoJSONBoundingBox
+	bbox: [Float]
+}
+interface GeoJSONGeometryInterface {
+	type: GeoJSONType!
+  crs: GeoJSONCoordinateReferenceSystem
+	bbox: [Float]
+	coordinates: GeoJSONCoordinates
 }
 
-type GeoJSONPoint implements GeoJSONInterface {
+type GeoJSONPoint implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
 	crs: GeoJSONCoordinateSystem
-	bbox: GeoJSONBoundingBox
-
-	coordinates: [Float]!
+	bbox: [Float]
+	coordinates: GeoJSONCoordinates
 }
 
-type GeoJSONMultiPoint implements GeoJSONInterface {
+type GeoJSONMultiPoint implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
 	crs: GeoJSONCoordinateSystem
-	bbox: GeoJSONBoundingBox
-
-	coordinates: [[Float]!]!
+	bbox: [Float]
+	coordinates: GeoJSONCoordinates
 }
 
-type GeoJSONLineString implements GeoJSONInterface {
+type GeoJSONLineString implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
 	crs: GeoJSONCoordinateSystem
-	bbox: GeoJSONBoundingBox
-
-	coordinates: [[Float]!]!
+	bbox: [Float]
+	coordinates: GeoJSONCoordinates
 }
 
-type GeoJSONMultiLineString implements GeoJSONInterface {
+type GeoJSONMultiLineString implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
 	crs: GeoJSONCoordinateSystem
-	bbox: GeoJSONBoundingBox
-
-	coordinates: [[[Float]!]!]!
+	bbox: [Float]
+	coordinates: GeoJSONCoordinates
 }
 
-type GeoJSONPolygon implements GeoJSONInterface {
+type GeoJSONPolygon implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
 	crs: GeoJSONCoordinateSystem
-	bbox: GeoJSONBoundingBox
-
-	coordinates: [[[Float]!]!]!
+	bbox: [Float]
+	coordinates: GeoJSONCoordinates
 }
 
-type GeoJSONMultiPolygon implements GeoJSONInterface {
+type GeoJSONMultiPolygon implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
 	crs: GeoJSONCoordinateSystem
-	bbox: GeoJSONBoundingBox
-
-	coordinates: [[[[Float]!]!]!]!
+	bbox: [Float]
+	coordinates: GeoJSONCoordinates
 }
-
-union GeoJSONGeometry = GeoJSONPoint |
-  GeoJSONMultiPoint |
-  GeoJSONLineString |
-  GeoJSONMultiLineString |
-  GeoJSONPolygon |
-  GeoJSONMultiPolygon
 
 type GeoJSONGeometryCollection implements GeoJSONInterface {
 	type: GeoJSONType!
 	crs: GeoJSONCoordinateSystem
-	bbox: GeoJSONBoundingBox
+	bbox: [Float]
 
-	geometries: [GeoJSONGeometry!]!
+	geometries: [GeoJSONGeometryInterface!]!
 }
-
-scalar JSONString
 
 type GeoJSONFeature implements GeoJSONInterface {
 	type: GeoJSONType!
 	crs: GeoJSONCoordinateSystem
-	bbox: GeoJSONBoundingBox
+	bbox: [Float]
 
-	geometry: GeoJSON
-	properties: JSONString
+	geometry: GeoJSONGeometryInterface
+	properties: JSONObject
 	id: String
 }
 
 type GeoJSONFeatureCollection implements GeoJSONInterface {
 	type: GeoJSONType!
 	crs: GeoJSONCoordinateSystem
-	bbox: GeoJSONBoundingBox
+	bbox: [Float]
 
 	features: [GeoJSONFeature!]!
 }
-
-union GeoJSON = GeoJSONPoint |
-  GeoJSONMultiPoint |
-  GeoJSONLineString |
-  GeoJSONMultiLineString |
-  GeoJSONPolygon |
-  GeoJSONMultiPolygon |
-  GeoJSONGeometryCollection |
-  GeoJSONFeature |
-  GeoJSONFeatureCollection
