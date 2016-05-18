@@ -7,4 +7,5 @@ GraphQL schema
 
 
 ## Implementations:
+- [graphql-geojson-go](https://github.com/sogko/graphql-geojson-go)
 - [data-gov-sg-graphql-go/schema/geojson](https://github.com/sogko/data-gov-sg-graphql-go/tree/master/lib/schema/geojson)
