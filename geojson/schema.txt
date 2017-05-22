@@ -13,7 +13,7 @@ enum GeoJSONType {
 	FeatureCollection
 }
 
-enum GeoJSONCoordinateSystemType {
+enum GeoJSONCoordinateReferenceSystemType {
   name
   link
 }
@@ -48,49 +48,49 @@ interface GeoJSONGeometryInterface {
 
 type GeoJSONPoint implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
-	crs: GeoJSONCoordinateSystem
+	crs: GeoJSONCoordinateReferenceSystem
 	bbox: [Float]
 	coordinates: GeoJSONCoordinates
 }
 
 type GeoJSONMultiPoint implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
-	crs: GeoJSONCoordinateSystem
+	crs: GeoJSONCoordinateReferenceSystem
 	bbox: [Float]
 	coordinates: GeoJSONCoordinates
 }
 
 type GeoJSONLineString implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
-	crs: GeoJSONCoordinateSystem
+	crs: GeoJSONCoordinateReferenceSystem
 	bbox: [Float]
 	coordinates: GeoJSONCoordinates
 }
 
 type GeoJSONMultiLineString implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
-	crs: GeoJSONCoordinateSystem
+	crs: GeoJSONCoordinateReferenceSystem
 	bbox: [Float]
 	coordinates: GeoJSONCoordinates
 }
 
 type GeoJSONPolygon implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
-	crs: GeoJSONCoordinateSystem
+	crs: GeoJSONCoordinateReferenceSystem
 	bbox: [Float]
 	coordinates: GeoJSONCoordinates
 }
 
 type GeoJSONMultiPolygon implements GeoJSONInterface, GeoJSONGeometryInterface {
 	type: GeoJSONType!
-	crs: GeoJSONCoordinateSystem
+	crs: GeoJSONCoordinateReferenceSystem
 	bbox: [Float]
 	coordinates: GeoJSONCoordinates
 }
 
 type GeoJSONGeometryCollection implements GeoJSONInterface {
 	type: GeoJSONType!
-	crs: GeoJSONCoordinateSystem
+	crs: GeoJSONCoordinateReferenceSystem
 	bbox: [Float]
 
 	geometries: [GeoJSONGeometryInterface!]!
@@ -98,7 +98,7 @@ type GeoJSONGeometryCollection implements GeoJSONInterface {
 
 type GeoJSONFeature implements GeoJSONInterface {
 	type: GeoJSONType!
-	crs: GeoJSONCoordinateSystem
+	crs: GeoJSONCoordinateReferenceSystem
 	bbox: [Float]
 
 	geometry: GeoJSONGeometryInterface
@@ -108,7 +108,7 @@ type GeoJSONFeature implements GeoJSONInterface {
 
 type GeoJSONFeatureCollection implements GeoJSONInterface {
 	type: GeoJSONType!
-	crs: GeoJSONCoordinateSystem
+	crs: GeoJSONCoordinateReferenceSystem
 	bbox: [Float]
 
 	features: [GeoJSONFeature!]!
